@@ -30,7 +30,7 @@ public class Node implements Comparable<Node>{
 
     /**
      * rootToString is a toString method to turn a given node tree into a string
-     * @param node Takes a root node
+     * @param node Takes a root node of a node tree
      * @return System outs using a postOrder traversal method outputting "letterFrequency||binary"
      * So that node's frequency next to its binary representation
      */
