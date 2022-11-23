@@ -16,6 +16,11 @@ public class Node implements Comparable<Node>{
         this.letter = character;
     }
 
+    public Node(char character, String bin){
+        this.binary = bin;
+        this.letter = character;
+    }
+
     public Node(Node left, Node right){
         this.letterFrequency = left.letterFrequency + right.letterFrequency;
         this.leftChild = left;
@@ -25,7 +30,7 @@ public class Node implements Comparable<Node>{
     }
 
     public String toString(){
-        return this.letter + " " + this.letterFrequency;
+        return this.letter + " " + this.binary;
     }
 
     /**

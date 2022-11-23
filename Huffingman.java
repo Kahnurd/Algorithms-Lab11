@@ -5,28 +5,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Huffingman {
 
     public Node root;
     public PriorityQueue<Node> nodes;
+    public ArrayList<Node> nodeArray = new ArrayList<Node>();;
     
 
-    public Huffingman(String input){
-        ArrayList<Node> nodeArray = new ArrayList<Node>();
+    public Huffingman(String input, Boolean freqOrBin){
 
         try{
             File file = new File(input);
             Scanner scan = new Scanner(file);
-            while (scan.hasNextLine()) {
-                nodeArray.add(new Node(scan.next().charAt(0), scan.nextDouble()));
-              }
+            if(freqOrBin) {
+                while (scan.hasNextLine()) {
+                    this.nodeArray.add(new Node(scan.next().charAt(0), scan.nextDouble()));
+                }
+                this.nodes = new PriorityQueue<>(this.nodeArray);
+                createTree();
+            } else {
+                while (scan.hasNextLine()) {
+                    this.nodeArray.add(new Node(scan.next().charAt(0), scan.next()));
+                }
+                createBinaryTree();
+            }
             scan.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred");
         }
-        this.nodes = new PriorityQueue<>(nodeArray);
-        createTree();
+
+
+
     }
 
     public void createTree(){
@@ -41,6 +53,34 @@ public class Huffingman {
             if(combinedNode.letterFrequency == 100) this.root = combinedNode;
         }
         HuffingAlgorithm(this.root);
+    }
+
+    public void createBinaryTree(){
+        root = new Node();
+        System.out.println(nodeArray);
+        for (Node node : nodeArray) {
+            Node current = root;
+            char[] binArray = node.binary.toCharArray();
+            for (int i = 0; i < binArray.length; i++) {
+                if(binArray[i] == '0') {
+                    if(i == binArray.length-1) {
+                        current.leftChild = node;
+                    } else {
+                        if(current.leftChild == null)current.leftChild = new Node();
+                        current = current.leftChild;
+                    }
+                } else {
+                    if(i == binArray.length-1) {
+                        current.rightChild = node;
+                    } else {
+                        if(current.rightChild == null)current.rightChild = new Node();
+                        current = current.rightChild;
+                    }
+                }
+            }
+
+        }
+
     }
 
     public static void HuffingAlgorithm(Node node){
@@ -104,10 +144,22 @@ public class Huffingman {
             System.out.println("Give the name of the input file and then the name of the outputfile, separated by a space.");
             // Scanner for system in
             Scanner scan = new Scanner(System.in);
+            String inputFile = scan.next();
+            String outputFile = scan.next();
+
+            System.out.println("Specify if the file has the binary or frequency of given characters,");
+            System.out.println("write b for binary or f for frequency.");
+            scan.nextLine();
+            char answer = scan.next().charAt(0);
+            Boolean freqOrBin = true;
+            if(answer == 'b') freqOrBin = false;
+            if(answer == 'f') freqOrBin = true;
+
+
             // Construct the Huffingman object with the file input
-            Huffingman potato = new Huffingman(scan.next());
+            Huffingman potato = new Huffingman(inputFile, freqOrBin);
             // Second input from the scanner is given to the fileWriter
-            FileWriter writer= new FileWriter(scan.next());
+            FileWriter writer= new FileWriter(outputFile);
             // Outputtree takes the writer for the file and the root node and writes the characters with the 
             // corresponding binary values
             Huffingman.outputTree(writer, potato.root);
@@ -116,7 +168,7 @@ public class Huffingman {
 
             System.out.println("Encrypt or Decrypt? (e/d)");
             scan.nextLine();
-            char answer = scan.next().charAt(0);
+            answer = scan.next().charAt(0);
             if(answer == 'd'){
                 System.out.println("Now enter the encrypted text:");
                 System.out.println("Decrypted text:");
