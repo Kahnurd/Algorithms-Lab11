@@ -5,13 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Huffingman {
 
     public Node root;
-    public PriorityQueue<Node> nodes;
     public ArrayList<Node> nodeArray = new ArrayList<Node>();;
     
 
@@ -24,11 +21,11 @@ public class Huffingman {
                 while (scan.hasNextLine()) {
                     this.nodeArray.add(new Node(scan.next().charAt(0), scan.nextDouble()));
                 }
-                this.nodes = new PriorityQueue<>(this.nodeArray);
                 createTree();
             } else {
                 while (scan.hasNextLine()) {
                     this.nodeArray.add(new Node(scan.next().charAt(0), scan.next()));
+                    scan.nextLine();
                 }
                 createBinaryTree();
             }
@@ -45,11 +42,13 @@ public class Huffingman {
         Node first;
         Node second;
         Node combinedNode;
+        PriorityQueue<Node> nodeQueue = new PriorityQueue<>(new compareFrequency());
+        nodeQueue.addAll(nodeArray);
         while(this.root == null){
-            first = nodes.poll();
-            second = nodes.poll();
+            first = nodeQueue.poll();
+            second = nodeQueue.poll();
             combinedNode = new Node(first, second);
-            nodes.add(combinedNode);
+            nodeQueue.add(combinedNode);
             if(combinedNode.letterFrequency == 100) this.root = combinedNode;
         }
         HuffingAlgorithm(this.root);
@@ -57,7 +56,6 @@ public class Huffingman {
 
     public void createBinaryTree(){
         root = new Node();
-        System.out.println(nodeArray);
         for (Node node : nodeArray) {
             Node current = root;
             char[] binArray = node.binary.toCharArray();
@@ -91,14 +89,30 @@ public class Huffingman {
         HuffingAlgorithm(node.rightChild);
     }
 
-    public static void outputTree(FileWriter writer, Node node){
-        if(node == null) return;
-        try { 
-            if(node.letter != (char)0) writer.write(node.letter + " " + node.binary + "\n");
+    // public static void outputTree(FileWriter writer, Node node){
+    //     if(node == null) return;
+    //     try { 
+    //         if(node.letter != (char)0) writer.write(node.letter + " " + node.binary + "\n");
+    //     }
+    //     catch (IOException e){ System.out.println(e);}
+    //     outputTree(writer, node.leftChild);
+    //     outputTree(writer, node.rightChild);
+    // }
+
+    public void outputList(String outFile){
+        try{
+        FileWriter writer= new FileWriter(outFile);
+        PriorityQueue<Node> nodeQueue = new PriorityQueue<>(new compareBinary());
+        System.out.println(nodeArray);
+        nodeQueue.addAll(nodeArray);
+        System.out.println(nodeQueue);
+        Node node;
+        for (int i = 0; i < nodeQueue.size(); i++) {
+            node = nodeQueue.poll();
+            writer.write(node.letter + " " + node.binary + "\n");
         }
-        catch (IOException e){ System.out.println(e);}
-        outputTree(writer, node.leftChild);
-        outputTree(writer, node.rightChild);
+        writer.close();
+    } catch (IOException e) { System.out.println("IOException in the outputList method");}
     }
 
     public String decrypt(String cryptText){
@@ -136,11 +150,6 @@ public class Huffingman {
     }
 
      public static void main(String[] args) {
-        
-        
-        
-
-        try{
             System.out.println("Give the name of the input file and then the name of the outputfile, separated by a space.");
             // Scanner for system in
             Scanner scan = new Scanner(System.in);
@@ -159,11 +168,9 @@ public class Huffingman {
             // Construct the Huffingman object with the file input
             Huffingman potato = new Huffingman(inputFile, freqOrBin);
             // Second input from the scanner is given to the fileWriter
-            FileWriter writer= new FileWriter(outputFile);
-            // Outputtree takes the writer for the file and the root node and writes the characters with the 
-            // corresponding binary values
-            Huffingman.outputTree(writer, potato.root);
-            writer.close();
+            
+            // Takes a given writer, and uses it to output 
+            potato.outputList(outputFile);
 
 
             System.out.println("Encrypt or Decrypt? (e/d)");
@@ -182,12 +189,11 @@ public class Huffingman {
                 }
             } else System.out.println("That's not what I asked for");
             scan.close();
-        }
-        catch(IOException e) {System.out.println(e);}
 
         // System.out.println("Encryption: " + potato.encrypt("bad"));
         // System.out.println(potato.decrypt("1001101"));
         // System.out.println(potato.decrypt("1101110011001101"));
-        
+        // 111001110100011110001101
+        // 0101110001100101000100011
      }
 }

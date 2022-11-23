@@ -1,4 +1,6 @@
-public class Node implements Comparable<Node>{
+import java.util.Comparator;
+
+public class Node{
     public Node leftChild;
     public Node rightChild;
     public Node parent;
@@ -30,7 +32,7 @@ public class Node implements Comparable<Node>{
     }
 
     public String toString(){
-        return this.letter + " " + this.binary;
+        return this.letter + " " + this.letterFrequency;
     }
 
     /**
@@ -50,4 +52,22 @@ public class Node implements Comparable<Node>{
         return 0;
     }
 
+}
+
+class compareFrequency implements Comparator<Node>{
+    public int compare(Node n1, Node n2){
+        if(n2.letterFrequency > n1.letterFrequency) return -1;
+        if(n2.letterFrequency < n1.letterFrequency) return 1;
+        return 0;
+    }
+    
+}
+
+class compareBinary implements Comparator<Node>{
+    public int compare(Node n1, Node n2){
+        if(n2.binary.length() > n1.binary.length()) return -1;
+        if(n2.binary.length() < n1.binary.length()) return 1;
+        return 0;
+    }
+    
 }
