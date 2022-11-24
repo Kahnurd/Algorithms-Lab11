@@ -103,11 +103,9 @@ public class Huffingman {
         try{
         FileWriter writer= new FileWriter(outFile);
         PriorityQueue<Node> nodeQueue = new PriorityQueue<>(new compareBinary());
-        System.out.println(nodeArray);
         nodeQueue.addAll(nodeArray);
-        System.out.println(nodeQueue);
         Node node;
-        for (int i = 0; i < nodeQueue.size(); i++) {
+        for (nodeQueue.addAll(nodeArray); 0 < nodeQueue.size(); node = nodeQueue.poll()) {
             node = nodeQueue.poll();
             writer.write(node.letter + " " + node.binary + "\n");
         }
