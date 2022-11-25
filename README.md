@@ -1,4 +1,4 @@
-## Task 1
+# Task 1
 
 Encodings :
 a: 10
@@ -8,20 +8,20 @@ d: 110
 e: 011
 f: 010
 
-## Task 2
+# Task 2
 
 In huffingman.java
 
-## Task 3
+# Task 3
 
 English.txt is the input
 englishEncoding.txt is the output (Letters with corresponding binary)
 
-## Task 4
+# Task 4
 
 I stole text from: https://learnenglishteens.britishcouncil.org/blogs/books/reading-fun-english
 
-# Orignial Text:
+## Orignial Text:
 
 When I was at primary school, summers holidays meant football with friends, countless PlayStation1 (wow I feel old...) sessions and more importantly no homework. Yet admittedly there was one thing I always feared…the book project. For those of you that don’t know what it is, it is a scheme to encourage young people to read, which involves finishing five books during the two months of holidays. Although it wasn’t obligatory, my sister was an avid reader and keen participator, so I was somewhat forced into it to by my parents. At the time of choosing the books I had a rather basic checklist; pictures, very few pages and a large font. Nevertheless, receiving the certificate on completion, which would stand proudly on the table for the first two weeks of term, helped motivate me to start enjoy reading. Now I can safely say that it is a hobby of mine. So, if you also enjoy reading, why not use a hobby to help you learn English?
 
@@ -35,7 +35,7 @@ I hope the next time you pick up a book it will be in English!
 
 PS. Picking it up and putting it back on the shelf doesn’t count…  
 
-# Encoded text :
+## Encoded text :
 
 111000001101110101100111000111110011111000111001100011000100111111000101101
 1001010110011110111011110110010101001001010010111000100100111101111011100
