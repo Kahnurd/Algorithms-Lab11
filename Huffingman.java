@@ -11,11 +11,14 @@ public class Huffingman {
     public Node root;
     public ArrayList<Node> nodeArray = new ArrayList<Node>();;
     
-
+/**
+ * 
+ * @param input
+ * @param freqOrBin
+ */
     public Huffingman(String input, Boolean freqOrBin){
-
         try{
-            File file = new File(input);
+            File file = new File(input);  
             Scanner scan = new Scanner(file);
             if(freqOrBin) {
                 while (scan.hasNextLine()) {
@@ -33,9 +36,6 @@ public class Huffingman {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred");
         }
-
-
-
     }
 
     public void createTree(){
@@ -177,14 +177,19 @@ public class Huffingman {
             if(answer == 'd'){
                 System.out.println("Now enter the encrypted text:");
                 System.out.println("Decrypted text:");
+                String encryptedText = "";
                 while(scan.hasNext()){
-                    System.out.println(potato.decrypt(scan.next()));
+                    encryptedText += scan.next();
                 }
+                System.out.println(potato.decrypt(encryptedText));
             } else if (answer == 'e') {
                 System.out.println("Now enter some plaintext:");
+                String plainText = "";
                 while(scan.hasNext()){
-                    System.out.println(potato.encrypt(scan.next()));
+                    plainText += scan.next();
                 }
+                String cleanText = plainText.replaceAll("\\W|[0-9]|_", "");
+                System.out.println(potato.encrypt(cleanText.toLowerCase()));
             } else System.out.println("That's not what I asked for");
             scan.close();
 
