@@ -125,6 +125,7 @@ public class Huffingman {
             }
             if(currNode.letter != (char)0) {
                 result += currNode.letter; 
+                if(result.length()%70 == 69) result += "\n";
                 currNode = root;
             }
         }
@@ -133,9 +134,16 @@ public class Huffingman {
 
     public String encrypt(String plainText){
         String result = "";
+        int counter = 0;
         char[] text = plainText.toCharArray();
         for (int i = 0; i < text.length; i++) {
-            result += encryptHelper(text[i], root);
+            String encryptedChar = encryptHelper(text[i], root);
+            result += encryptedChar;
+            counter += encryptedChar.length();
+            if(counter > 70){
+                counter = 0;
+                result += "\n";
+            }
         }
         return result;
     }
