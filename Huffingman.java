@@ -89,16 +89,6 @@ public class Huffingman {
         HuffingAlgorithm(node.rightChild);
     }
 
-    // public static void outputTree(FileWriter writer, Node node){
-    //     if(node == null) return;
-    //     try { 
-    //         if(node.letter != (char)0) writer.write(node.letter + " " + node.binary + "\n");
-    //     }
-    //     catch (IOException e){ System.out.println(e);}
-    //     outputTree(writer, node.leftChild);
-    //     outputTree(writer, node.rightChild);
-    // }
-
     public void outputList(String outFile){
         try{
         FileWriter writer= new FileWriter(outFile);
@@ -155,6 +145,15 @@ public class Huffingman {
         } else return "";
     }
 
+    private String averageLength(){
+        double total = 0;
+        for (Node node : nodeArray) {
+            total += (node.letterFrequency/100) * node.binary.length();
+        }
+        // Still need this to return a fraction instead of an integer
+        return total + "";
+    }
+
      public static void main(String[] args) {
             System.out.println("Give the name of the input file and then the name of the outputfile, separated by a space.");
             // Scanner for system in
@@ -177,6 +176,7 @@ public class Huffingman {
             
             // Takes a given writer, and uses it to output 
             potato.outputList(outputFile);
+            if(answer == 'f') System.out.println("Average length of binary representations: " + potato.averageLength());
 
 
             System.out.println("Encrypt or Decrypt? (e/d)");
@@ -200,11 +200,5 @@ public class Huffingman {
                 System.out.println(potato.encrypt(cleanText.toLowerCase()));
             } else System.out.println("That's not what I asked for");
             scan.close();
-
-        // System.out.println("Encryption: " + potato.encrypt("bad"));
-        // System.out.println(potato.decrypt("1001101"));
-        // System.out.println(potato.decrypt("1101110011001101"));
-        // 111001110100011110001101
-        // 0101110001100101000100011
      }
 }
