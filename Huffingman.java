@@ -93,9 +93,11 @@ public class Huffingman {
         try{
         FileWriter writer= new FileWriter(outFile);
         PriorityQueue<Node> nodeQueue = new PriorityQueue<>(new compareBinary());
-        nodeQueue.addAll(nodeArray);
         Node node;
-        for (nodeQueue.addAll(nodeArray); 0 < nodeQueue.size(); node = nodeQueue.poll()) {
+        nodeQueue.addAll(nodeArray);
+        for (int i = nodeQueue.size(); 0 < i; i--) {
+            System.out.println(nodeQueue);
+            System.out.println(nodeQueue.size());
             node = nodeQueue.poll();
             writer.write(node.letter + " " + node.binary + "\n");
         }
@@ -150,7 +152,6 @@ public class Huffingman {
         for (Node node : nodeArray) {
             total += (node.letterFrequency/100) * node.binary.length();
         }
-        // Still need this to return a fraction instead of an integer
         return total + "";
     }
 
