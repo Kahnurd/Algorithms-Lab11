@@ -121,8 +121,6 @@ public class Huffingman {
         Node node;
         nodeQueue.addAll(nodeArray);
         for (int i = nodeQueue.size(); 0 < i; i--) {
-            System.out.println(nodeQueue);
-            System.out.println(nodeQueue.size());
             node = nodeQueue.poll();
             writer.write(node.letter + " " + node.binary + "\n");
         }
@@ -245,11 +243,12 @@ public class Huffingman {
             answer = scan.next().charAt(0);
             if(answer == 'd'){
                 System.out.println("Now enter the encrypted text:");
-                System.out.println("Decrypted text:");
+                
                 String encryptedText = "";
                 while(scan.hasNext()){
                     encryptedText += scan.next();
                 }
+                System.out.println("Decrypted text:");
                 System.out.println(potato.decrypt(encryptedText));
             } else if (answer == 'e') {
                 System.out.println("Now enter some plaintext:");
